@@ -205,8 +205,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
    func stopRecording() {
 
        if movieOutput.isRecording == true {
-           movieOutput.stopRecording()
-        }
+          cameraButton.backgroundColor = UIColor.red
+
+          movieOutput.stopRecording()
+       }
    }
 
     func capture(_ captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAt fileURL: URL!, fromConnections connections: [Any]!) {
@@ -220,7 +222,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             print("Error recording movie: \(error!.localizedDescription)")
 
         } else {
-            cameraButton.backgroundColor = UIColor.red
             let videoRecorded = outputURL! as URL
 
             performSegue(withIdentifier: "showVideo", sender: videoRecorded)
