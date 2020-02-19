@@ -9,12 +9,13 @@
 /* Begin PBXBuildFile section */
 		4D65586623FCD89900A26C35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65586523FCD89900A26C35 /* AppDelegate.swift */; };
 		4D65586823FCD89900A26C35 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65586723FCD89900A26C35 /* SceneDelegate.swift */; };
-		4D65586A23FCD89900A26C35 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65586923FCD89900A26C35 /* ViewController.swift */; };
 		4D65586D23FCD89900A26C35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D65586B23FCD89900A26C35 /* Main.storyboard */; };
 		4D65586F23FCD89D00A26C35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D65586E23FCD89D00A26C35 /* Assets.xcassets */; };
 		4D65587223FCD89D00A26C35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D65587023FCD89D00A26C35 /* LaunchScreen.storyboard */; };
 		4D65587D23FCD89E00A26C35 /* SeniorDesignTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65587C23FCD89E00A26C35 /* SeniorDesignTests.swift */; };
 		4D65588823FCD89E00A26C35 /* SeniorDesignUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65588723FCD89E00A26C35 /* SeniorDesignUITests.swift */; };
+		4D65589623FCDED600A26C35 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65589523FCDED600A26C35 /* CameraViewController.swift */; };
+		4D65589823FCDF5A00A26C35 /* VideoPlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65589723FCDF5A00A26C35 /* VideoPlaybackViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +39,6 @@
 		4D65586223FCD89900A26C35 /* SeniorDesign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeniorDesign.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D65586523FCD89900A26C35 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D65586723FCD89900A26C35 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4D65586923FCD89900A26C35 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4D65586C23FCD89900A26C35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4D65586E23FCD89D00A26C35 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D65587123FCD89D00A26C35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +49,8 @@
 		4D65588323FCD89E00A26C35 /* SeniorDesignUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SeniorDesignUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D65588723FCD89E00A26C35 /* SeniorDesignUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeniorDesignUITests.swift; sourceTree = "<group>"; };
 		4D65588923FCD89E00A26C35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D65589523FCDED600A26C35 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		4D65589723FCDF5A00A26C35 /* VideoPlaybackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaybackViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,11 +103,12 @@
 			children = (
 				4D65586523FCD89900A26C35 /* AppDelegate.swift */,
 				4D65586723FCD89900A26C35 /* SceneDelegate.swift */,
-				4D65586923FCD89900A26C35 /* ViewController.swift */,
 				4D65586B23FCD89900A26C35 /* Main.storyboard */,
 				4D65586E23FCD89D00A26C35 /* Assets.xcassets */,
 				4D65587023FCD89D00A26C35 /* LaunchScreen.storyboard */,
 				4D65587323FCD89D00A26C35 /* Info.plist */,
+				4D65589523FCDED600A26C35 /* CameraViewController.swift */,
+				4D65589723FCDF5A00A26C35 /* VideoPlaybackViewController.swift */,
 			);
 			path = SeniorDesign;
 			sourceTree = "<group>";
@@ -259,8 +262,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D65586A23FCD89900A26C35 /* ViewController.swift in Sources */,
+				4D65589623FCDED600A26C35 /* CameraViewController.swift in Sources */,
 				4D65586623FCD89900A26C35 /* AppDelegate.swift in Sources */,
+				4D65589823FCDF5A00A26C35 /* VideoPlaybackViewController.swift in Sources */,
 				4D65586823FCD89900A26C35 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -435,6 +439,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 392UAJDK5U;
 				INFOPLIST_FILE = SeniorDesign/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -452,6 +457,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 392UAJDK5U;
 				INFOPLIST_FILE = SeniorDesign/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
