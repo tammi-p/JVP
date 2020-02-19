@@ -15,11 +15,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2vl-9k-gOK">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2vl-9k-gOK">
                                 <rect key="frame" x="8" y="52" width="398" height="646"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="646" id="Yek-BS-waO"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" id="I7L-if-PXU"/>
                                     <constraint firstAttribute="width" constant="398" id="nAN-oe-f1W"/>
                                 </constraints>
                             </view>
@@ -31,11 +31,21 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="mfG-tU-TAp"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubr-Lc-xT5">
+                                <rect key="frame" x="79" y="773" width="256" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="2vl-9k-gOK" firstAttribute="leading" secondItem="V7n-TA-fPi" secondAttribute="leading" constant="8" id="4ke-Ik-xco"/>
                             <constraint firstItem="V7n-TA-fPi" firstAttribute="trailing" secondItem="2vl-9k-gOK" secondAttribute="trailing" constant="8" id="6Dv-A6-FSJ"/>
+                            <constraint firstItem="V7n-TA-fPi" firstAttribute="trailing" secondItem="2vl-9k-gOK" secondAttribute="trailing" constant="8" id="7TU-fO-rOY"/>
                             <constraint firstItem="9iw-GU-tPa" firstAttribute="top" secondItem="2vl-9k-gOK" secondAttribute="bottom" constant="8" id="WtW-sE-iWm"/>
+                            <constraint firstItem="2vl-9k-gOK" firstAttribute="top" secondItem="V7n-TA-fPi" secondAttribute="top" constant="8" id="dL5-MI-mvQ"/>
                             <constraint firstItem="2vl-9k-gOK" firstAttribute="leading" secondItem="V7n-TA-fPi" secondAttribute="leading" constant="8" id="h0M-9R-5xU"/>
                             <constraint firstItem="2vl-9k-gOK" firstAttribute="top" secondItem="V7n-TA-fPi" secondAttribute="top" constant="8" id="hbn-ym-kYu"/>
                         </constraints>
@@ -44,6 +54,7 @@
                     <connections>
                         <outlet property="camPreview" destination="2vl-9k-gOK" id="bJN-HS-vNR"/>
                         <outlet property="cameraButton" destination="9iw-GU-tPa" id="ils-g2-zdU"/>
+                        <outlet property="degreeLabel" destination="ubr-Lc-xT5" id="OmC-hr-Nkt"/>
                         <segue destination="gPG-DZ-UEt" kind="show" identifier="showVideo" id="4FI-rl-Pfl"/>
                     </connections>
                 </viewController>

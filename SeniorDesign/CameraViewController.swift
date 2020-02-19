@@ -1,6 +1,7 @@
 import UIKit
 
 import AVFoundation
+import CoreMotion
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
 
@@ -9,6 +10,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
     @IBOutlet weak var cameraButton: UIView!
     
+    @IBOutlet weak var degreeLabel: UILabel!
     let captureSession = AVCaptureSession()
 
     let movieOutput = AVCaptureMovieFileOutput()
@@ -18,10 +20,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var activeInput: AVCaptureDeviceInput!
 
     var outputURL: URL!
+    
+    var manager : CMMotionManager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Camera
         if setupSession() {
             setupPreview()
             startSession()
@@ -34,6 +39,27 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         cameraButton.addGestureRecognizer(cameraButtonRecognizer)
 
         cameraButton.backgroundColor = UIColor.red
+        
+        // Gyroscope
+        self.manager = CMMotionManager()
+        self.manager!.gyroUpdateInterval = 0.1
+
+        // remember to stop it.. with:      self.manager?.stopGyroUpdates()
+        self.manager?.startDeviceMotionUpdates(to: OperationQueue.main, withHandler: { [weak self] (motion, error) -> Void in
+
+        // Get the attitude of the device
+        if let attitude = motion?.attitude {
+            // Get the pitch (in radians) and convert to degrees.
+            // Import Darwin to get M_PI in Swift
+            print(attitude.pitch * 180.0/M_PI)
+
+            DispatchQueue.main.async {
+                // Update some UI
+                self?.degreeLabel.text = String(attitude.pitch * 180 / M_PI)
+            }
+        }
+
+        })
 
 
     }
