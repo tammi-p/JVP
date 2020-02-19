@@ -8,6 +8,7 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
     let avPlayer = AVPlayer()
     var avPlayerLayer: AVPlayerLayer!
     var videoURL: URL!
+    var finalDegree: Double!
 
     @IBOutlet weak var videoView: UIView!
     
@@ -42,6 +43,7 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
                 formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 let now = Date()
                 let dateString = formatter.string(from:now)
+                mail.setMessageBody("Degree: " + String(finalDegree), isHTML: false)
                 try mail.addAttachmentData(Data.init(contentsOf: videoURL), mimeType: "video/mp4", fileName: dateString)
 
             } catch _ {

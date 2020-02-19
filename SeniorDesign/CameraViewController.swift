@@ -3,14 +3,21 @@ import UIKit
 import AVFoundation
 import CoreMotion
 
+struct EmailData {
+    var outputURL: URL!
+    var degree: Double!
+}
+
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
 
     @IBOutlet weak var camPreview: UIView!
-    
 
     @IBOutlet weak var cameraButton: UIView!
     
     @IBOutlet weak var degreeLabel: UILabel!
+    
+    @IBOutlet weak var recordingLabel: UILabel!
+    
     let captureSession = AVCaptureSession()
 
     let movieOutput = AVCaptureMovieFileOutput()
@@ -22,6 +29,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var outputURL: URL!
     
     var manager : CMMotionManager!
+    
+    var finalDegree : Double!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +40,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             setupPreview()
             startSession()
         }
+        
+        self.camPreview.translatesAutoresizingMaskIntoConstraints = false
+        self.camPreview.addSubview(recordingLabel)
+        recordingLabel.isHidden = true
 
+        // Camera Button
         cameraButton.isUserInteractionEnabled = true
 
         let cameraButtonRecognizer = UITapGestureRecognizer(target: self, action: #selector(CameraViewController.startCapture))
@@ -39,6 +53,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         cameraButton.addGestureRecognizer(cameraButtonRecognizer)
 
         cameraButton.backgroundColor = UIColor.red
+        
+        
+        self.cameraButton.translatesAutoresizingMaskIntoConstraints = false
         
         // Gyroscope
         self.manager = CMMotionManager()
@@ -51,11 +68,18 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if let attitude = motion?.attitude {
             // Get the pitch (in radians) and convert to degrees.
             // Import Darwin to get M_PI in Swift
-            print(attitude.pitch * 180.0/M_PI)
+            // print(attitude.pitch * 180.0/M_PI)
 
             DispatchQueue.main.async {
-                // Update some UI
-                self?.degreeLabel.text = String(attitude.pitch * 180 / M_PI)
+                let degree = attitude.pitch * 180 / Double.pi
+                self?.degreeLabel.text = String(degree)
+                self?.finalDegree = degree
+                
+                if (degree >= 30 && degree <= 45) {
+                    self?.cameraButton.backgroundColor = UIColor.green
+                } else {
+                    self?.cameraButton.backgroundColor = UIColor.red
+                }
             }
         }
 
@@ -162,8 +186,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
     @objc func startCapture() {
         
-        cameraButton.backgroundColor = UIColor.green
-
         startRecording()
 
     }
@@ -184,12 +206,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         let vc = segue.destination as! VideoPlaybackViewController
+        let data: EmailData = sender as! EmailData
 
-        vc.videoURL = sender as? URL
-
+        vc.videoURL = data.outputURL as URL
+        vc.finalDegree = data.degree as Double
     }
 
     func startRecording() {
+        recordingLabel.isHidden = false
+        
+        _ = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(stopRecording), userInfo: nil, repeats: false)
 
         if movieOutput.isRecording == false {
 
@@ -228,8 +254,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
    }
 
-   func stopRecording() {
+    @objc func stopRecording() {
 
+       recordingLabel.isHidden = true
        if movieOutput.isRecording == true {
           cameraButton.backgroundColor = UIColor.red
 
@@ -250,7 +277,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         } else {
             let videoRecorded = outputURL! as URL
 
-            performSegue(withIdentifier: "showVideo", sender: videoRecorded)
+            let data = EmailData(outputURL: videoRecorded, degree: self.finalDegree)
+            performSegue(withIdentifier: "showVideo", sender: data)
 
         }
 
