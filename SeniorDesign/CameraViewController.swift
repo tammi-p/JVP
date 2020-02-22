@@ -105,6 +105,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         // Setup Camera
         let camera = AVCaptureDevice.default(for: AVMediaType.video)! // rear camera
         // let camera = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: .video, position: AVCaptureDevice.Position.front)! // front camera
+        if (camera.isFocusModeSupported(.continuousAutoFocus)) {
+            try! camera.lockForConfiguration()
+            camera.focusMode = .continuousAutoFocus
+            camera.unlockForConfiguration()
+        }
         do {
 
             let input = try AVCaptureDeviceInput(device: camera)
@@ -215,6 +220,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func startRecording() {
         recordingLabel.isHidden = false
         
+        sleep(5)
+                
         _ = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(stopRecording), userInfo: nil, repeats: false)
 
         if movieOutput.isRecording == false {
@@ -245,6 +252,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
             //EDIT2: And I forgot this
             outputURL = tempURL()
+            
             movieOutput.startRecording(to: outputURL, recordingDelegate: self)
 
             }
