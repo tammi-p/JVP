@@ -103,8 +103,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         captureSession.sessionPreset = AVCaptureSession.Preset.high
 
         // Setup Camera
-        let camera = AVCaptureDevice.default(for: AVMediaType.video)!
-
+        let camera = AVCaptureDevice.default(for: AVMediaType.video)! // rear camera
+        // let camera = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: .video, position: AVCaptureDevice.Position.front)! // front camera
         do {
 
             let input = try AVCaptureDeviceInput(device: camera)

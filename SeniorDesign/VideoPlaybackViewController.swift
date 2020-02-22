@@ -10,8 +10,9 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
     var videoURL: URL!
     var finalDegree: Double!
 
-    @IBOutlet weak var videoView: UIView!
+    @IBOutlet weak var videoView: PassThroughView!
     
+    @IBOutlet weak var sendButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,7 +27,10 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
         avPlayerLayer.setAffineTransform(affineTransform)
         
         videoView.layer.addSublayer(avPlayerLayer)
+        videoView.addSubview(sendButton)
         avPlayer.play()
+        
+        view.addSubview(sendButton)
 
         NotificationCenter.default.addObserver(self, selector: #selector(VideoPlaybackViewController.playerDidFinishPlaying(note:)),
                                                name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
@@ -73,5 +77,16 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
     
     func degreeToRadian(_ x: CGFloat) -> CGFloat {
         return .pi * x / 180.0
+    }
+}
+
+class PassThroughView: UIView {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        for subview in subviews {
+            if !subview.isHidden && subview.isUserInteractionEnabled && subview.point(inside: convert(point, to: subview), with: event) {
+                return true
+            }
+        }
+        return false
     }
 }
