@@ -9,6 +9,7 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
     var avPlayerLayer: AVPlayerLayer!
     var videoURL: URL!
     var finalDegree: Double!
+    var nameEntered: String!
 
     @IBOutlet weak var videoView: PassThroughView!
     
@@ -36,7 +37,7 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
                                                name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
     
-    func composeEmail() {
+    func composeEmail(name: String) {
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
@@ -47,7 +48,12 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
                 formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 let now = Date()
                 let dateString = formatter.string(from:now)
-                mail.setMessageBody("Degree: " + String(finalDegree), isHTML: false)
+                mail.setToRecipients(["venous.jvp@gmail.com"]) 
+                
+                let dateOnly = dateString.prefix(10) // 2016-12-08
+                mail.setSubject("\(name)" + " " + dateOnly)
+                
+                // mail.setMessageBody("Degree: " + String(finalDegree), isHTML: false)
                 try mail.addAttachmentData(Data.init(contentsOf: videoURL), mimeType: "video/mp4", fileName: dateString)
 
             } catch _ {
@@ -61,7 +67,29 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
     }
     
     @IBAction func send(_ sender: Any) {
-        composeEmail()
+        //1. Create the alert controller.
+        let alert = UIAlertController(title: "Enter Name", message: nil, preferredStyle: .alert)
+
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextField { (textField) in
+            textField.font = UIFont.systemFont(ofSize: 18.0)
+            textField.placeholder = "Please enter your name"
+            textField.autocapitalizationType = UITextAutocapitalizationType.words
+        }
+        
+        // 3a. Add a Cancel action.
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        // 3b. Grab the value from the text field, and compose email when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0].text // Force unwrapping because we know it exists.
+            if textField != "" {
+                self.composeEmail(name: textField!)
+            }
+        }))
+
+        // 4. Present the alert.
+        self.present(alert, animated: true)
     }
     
     @objc func playerDidFinishPlaying(note: NSNotification) {
