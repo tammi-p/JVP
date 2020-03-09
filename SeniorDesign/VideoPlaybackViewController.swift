@@ -9,7 +9,9 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
     var avPlayerLayer: AVPlayerLayer!
     var videoURL: URL!
     var finalDegree: Double!
-
+    var screenHeight: CGFloat!
+    var screenWidth: CGFloat!
+    
     @IBOutlet weak var videoView: PassThroughView!
     
     @IBOutlet weak var sendButton: UIButton!
@@ -17,15 +19,22 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set videoView frame size and position
+        videoView.frame.size.width = screenWidth * 0.7
+        videoView.frame.size.height = screenHeight * 0.7
+        videoView.center.x = view.center.x
+        
         avPlayerLayer = AVPlayerLayer(player: avPlayer)
-        avPlayerLayer.frame = videoView.bounds
+        avPlayerLayer.frame = videoView.frame
+        // print("Player view bounds: \(avPlayerLayer.frame)")
+        
         avPlayerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
-
+        
         let playerItem = AVPlayerItem(url: videoURL as URL)
         avPlayer.replaceCurrentItem(with: playerItem)
         avPlayer.actionAtItemEnd = .none
-        let affineTransform = CGAffineTransform(rotationAngle: degreeToRadian(90))
-        avPlayerLayer.setAffineTransform(affineTransform)
+        //let affineTransform = CGAffineTransform(rotationAngle: degreeToRadian(90))
+        //avPlayerLayer.setAffineTransform(affineTransform)
         
         videoView.layer.addSublayer(avPlayerLayer)
         videoView.addSubview(sendButton)

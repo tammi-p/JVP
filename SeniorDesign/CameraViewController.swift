@@ -8,14 +8,19 @@ struct EmailData {
     var degree: Double!
 }
 
+struct Screen {
+    static var screenWidth: CGFloat = UIScreen.main.bounds.width
+    static var screenHeight: CGFloat = UIScreen.main.bounds.height
+}
+
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     @IBOutlet weak var camPreview: UIView!
-    
+
     @IBOutlet weak var cameraButton: UIView!
-    
+
     @IBOutlet weak var degreeLabel: UILabel!
-    
+
     @IBOutlet weak var recordingLabel: UILabel!
     
     let captureSession = AVCaptureSession()
@@ -30,12 +35,18 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     var manager : CMMotionManager!
     
+    var timer = Timer()
+    
     var finalDegree : Double! = 0;
     var allowClick : Bool! = true
     var firstClick: Bool! = true // If first click is true, that means the final degree is set
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set camPreview frame width and height
+        camPreview.frame.size.width = Screen.screenWidth - 2*8
+        camPreview.frame.size.height = Screen.screenHeight - 5*8 - cameraButton.frame.size.height
         
         // Camera
         if setupSession() {
@@ -93,7 +104,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func setupPreview() {
         // Configure previewLayer
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.frame = camPreview.bounds
+        previewLayer.frame = camPreview.frame
+        // print("Bounds: \(previewLayer.frame)")
         previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         camPreview.layer.addSublayer(previewLayer)
     }
@@ -204,7 +216,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 recordingLabel.backgroundColor = .orange
                 camPreview.alpha = 0.8
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.startRecording()
                 }
             }
@@ -234,6 +246,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         vc.videoURL = data.outputURL as URL
         vc.finalDegree = data.degree as Double
+        vc.screenHeight = Screen.screenHeight
+        vc.screenWidth =  Screen.screenWidth
     }
     
     func startRecording() {
@@ -243,7 +257,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         allowClick = true
         
         // self.cameraButton.isUserInteractionEnabled = true
-        _ = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(stopRecording), userInfo: nil, repeats: false)
+        
+        timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(stopRecording), userInfo: nil, repeats: false)
         
         if movieOutput.isRecording == false {
             
@@ -285,6 +300,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     @objc func stopRecording() {
         
+        timer.invalidate()
         recordingLabel.isHidden = true
         
         if movieOutput.isRecording == true {
