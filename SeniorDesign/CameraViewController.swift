@@ -5,7 +5,7 @@ import CoreMotion
 
 struct EmailData {
     var outputURL: URL!
-    // var degree: Double!
+    var degree: Double!
 }
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
@@ -30,7 +30,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     var manager : CMMotionManager!
     
-    // var finalDegree : Double!
+    var finalDegree : Double! = 0;
+    var allowClick : Bool! = true
+    var firstClick: Bool! = true // If first click is true, that means the final degree is set
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +56,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         cameraButton.backgroundColor = UIColor.red
         
-        
         self.cameraButton.translatesAutoresizingMaskIntoConstraints = false
         
         // Gyroscope
@@ -72,20 +73,21 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 
                 DispatchQueue.main.async {
                     let degree = attitude.pitch * 180 / Double.pi
-                    self?.degreeLabel.text = "Degrees: " + String(format: "%.0f",degree) + "°"
-                    // self?.finalDegree = degree
+                    if (self!.firstClick) {
+                        self!.finalDegree = (degree*100).rounded()/100 // round to 2 decimal places
+                    }
+                    self?.degreeLabel.text = "Angle: \(String(format: "%.0f",self!.finalDegree))°" // display angle as integer
                     
-                    if (degree >= 30 && degree <= 45) {
+                    if ((self!.finalDegree >= 30 && self!.finalDegree <= 45) && self!.allowClick) {
                         self?.cameraButton.backgroundColor = UIColor.green
+                        self?.cameraButton.isUserInteractionEnabled = true
                     } else {
                         self?.cameraButton.backgroundColor = UIColor.red
+                        self?.cameraButton.isUserInteractionEnabled = false
                     }
                 }
             }
-            
         })
-        
-        
     }
     
     func setupPreview() {
@@ -110,10 +112,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             camera.focusMode = .continuousAutoFocus
             camera.unlockForConfiguration()
         }
+        
         do {
-            
             let input = try AVCaptureDeviceInput(device: camera)
-            
             if captureSession.canAddInput(input) {
                 captureSession.addInput(input)
                 activeInput = input
@@ -149,6 +150,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         // Video Mode
         
     }
+    
     
     //MARK:- Camera Session
     func startSession() {
@@ -190,14 +192,26 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     @objc func startCapture() {
-        recordingLabel.isHidden = false
-        recordingLabel.text = "Starting..."
-        recordingLabel.backgroundColor = .orange
-        camPreview.alpha = 0.8
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            self.startRecording()
+        // When gesture recognizer is pressed, if not recording, first time pressing states the final degree is set, second time pressing causes 5s time delay then start recording
+        if movieOutput.isRecording == false {
+            if (firstClick) {
+                firstClick = false
+                allowClick = true
+            } else {
+                allowClick = false
+                recordingLabel.isHidden = false
+                recordingLabel.text = "Starting..."
+                recordingLabel.backgroundColor = .orange
+                camPreview.alpha = 0.8
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                    self.startRecording()
+                }
+            }
         }
-        
+        else {
+            stopRecording()
+        }
     }
     
     //EDIT 1: I FORGOT THIS AT FIRST
@@ -219,15 +233,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         let data: EmailData = sender as! EmailData
         
         vc.videoURL = data.outputURL as URL
-        // vc.finalDegree = data.degree as Double
+        vc.finalDegree = data.degree as Double
     }
     
     func startRecording() {
         self.recordingLabel.text = "Recording"
         self.recordingLabel.backgroundColor = .red
         camPreview.alpha = 1
-        // sleep(5)
+        allowClick = true
         
+        // self.cameraButton.isUserInteractionEnabled = true
         _ = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(stopRecording), userInfo: nil, repeats: false)
         
         if movieOutput.isRecording == false {
@@ -271,11 +286,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @objc func stopRecording() {
         
         recordingLabel.isHidden = true
+        
         if movieOutput.isRecording == true {
             cameraButton.backgroundColor = UIColor.red
-            
             movieOutput.stopRecording()
         }
+        
     }
     
     func capture(_ captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAt fileURL: URL!, fromConnections connections: [Any]!) {
@@ -291,13 +307,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         } else {
             let videoRecorded = outputURL! as URL
             
-            let data = EmailData(outputURL: videoRecorded)
-            // let data = EmailData(outputURL: videoRecorded, degree: self.finalDegree)
+            let data = EmailData(outputURL: videoRecorded, degree: self.finalDegree)
             performSegue(withIdentifier: "showVideo", sender: data)
             
+            self.firstClick = true
+            self.allowClick = true
+            self.finalDegree = 0
         }
-        
+    
     }
 
-    
 }

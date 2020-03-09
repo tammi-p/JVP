@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SeniorDesign
+@testable import JVP
 
 class SeniorDesignTests: XCTestCase {
 

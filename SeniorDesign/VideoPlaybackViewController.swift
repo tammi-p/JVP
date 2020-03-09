@@ -9,11 +9,11 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
     var avPlayerLayer: AVPlayerLayer!
     var videoURL: URL!
     var finalDegree: Double!
-    var nameEntered: String!
 
     @IBOutlet weak var videoView: PassThroughView!
     
     @IBOutlet weak var sendButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,7 +37,7 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
                                                name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
     
-    func composeEmail(name: String) {
+    func composeEmail(id: String) {
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
@@ -45,16 +45,16 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
             do {
                 let formatter = DateFormatter()
                 //2016-12-08 03:37:22 +0000
-                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                formatter.dateFormat = "yyyy-MM-dd_HH:mm:ss"
                 let now = Date()
                 let dateString = formatter.string(from:now)
                 mail.setToRecipients(["venous.jvp@gmail.com"]) 
                 
                 let dateOnly = dateString.prefix(10) // 2016-12-08
-                mail.setSubject("\(name)" + " " + dateOnly)
+                mail.setSubject("\(id) \(dateOnly)")
                 
-                // mail.setMessageBody("Degree: " + String(finalDegree), isHTML: false)
-                try mail.addAttachmentData(Data.init(contentsOf: videoURL), mimeType: "video/mp4", fileName: dateString)
+                mail.setMessageBody("Angle: " + String(finalDegree), isHTML: false)
+                try mail.addAttachmentData(Data.init(contentsOf: videoURL), mimeType: "video/mp4", fileName: "\(id)_\(dateString).mp4")
 
             } catch _ {
                 print ("There was an error with sending the email.")
@@ -67,24 +67,29 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
     }
     
     @IBAction func send(_ sender: Any) {
+        avPlayer.pause() // pause playback
+        
         //1. Create the alert controller.
-        let alert = UIAlertController(title: "Enter Name", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "What is your Patient ID Number?", message: nil, preferredStyle: .alert)
 
         //2. Add the text field. You can configure it however you need.
         alert.addTextField { (textField) in
             textField.font = UIFont.systemFont(ofSize: 18.0)
-            textField.placeholder = "Please enter your name"
+            textField.placeholder = "Enter your patient ID"
             textField.autocapitalizationType = UITextAutocapitalizationType.words
         }
         
         // 3a. Add a Cancel action.
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {[weak alert](_) in self.avPlayer.play()}))
         
         // 3b. Grab the value from the text field, and compose email when the user clicks OK.
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
             let textField = alert?.textFields![0].text // Force unwrapping because we know it exists.
             if textField != "" {
-                self.composeEmail(name: textField!)
+                self.composeEmail(id: textField!)
+            }
+            else {
+                self.avPlayer.play()
             }
         }))
 
@@ -100,7 +105,13 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
     }
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true)
+        if result == .sent { // email was sent
+            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil) // dismiss all VCs and go back to root VC
+        }
+        else { // email was cancelled, saved, or failed to send
+            controller.dismiss(animated: true) // dismiss email view
+            avPlayer.play()
+        }
     }
     
     func degreeToRadian(_ x: CGFloat) -> CGFloat {

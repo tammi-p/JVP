@@ -36,7 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D65586223FCD89900A26C35 /* SeniorDesign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeniorDesign.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D65586223FCD89900A26C35 /* JVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D65586523FCD89900A26C35 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D65586723FCD89900A26C35 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4D65586C23FCD89900A26C35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -91,7 +91,7 @@
 		4D65586323FCD89900A26C35 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4D65586223FCD89900A26C35 /* SeniorDesign.app */,
+				4D65586223FCD89900A26C35 /* JVP.app */,
 				4D65587823FCD89D00A26C35 /* SeniorDesignTests.xctest */,
 				4D65588323FCD89E00A26C35 /* SeniorDesignUITests.xctest */,
 			);
@@ -148,7 +148,7 @@
 			);
 			name = SeniorDesign;
 			productName = SeniorDesign;
-			productReference = 4D65586223FCD89900A26C35 /* SeniorDesign.app */;
+			productReference = 4D65586223FCD89900A26C35 /* JVP.app */;
 			productType = "com.apple.product-type.application";
 		};
 		4D65587723FCD89D00A26C35 /* SeniorDesignTests */ = {
@@ -446,7 +446,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = tammitaphong.SeniorDesign;
-				PRODUCT_NAME = SeniorDesign;
+				PRODUCT_NAME = JVP;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -464,7 +464,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = tammitaphong.SeniorDesign;
-				PRODUCT_NAME = SeniorDesign;
+				PRODUCT_NAME = JVP;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
