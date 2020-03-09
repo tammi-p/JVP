@@ -105,7 +105,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         // Configure previewLayer
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer.frame = camPreview.frame
-        // print("Bounds: \(previewLayer.frame)")
+        // print("Preview Layer Frame: \(previewLayer.frame)")
         previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         camPreview.layer.addSublayer(previewLayer)
     }
@@ -186,22 +186,22 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         return DispatchQueue.main
     }
     
-    func currentVideoOrientation() -> AVCaptureVideoOrientation {
-        var orientation: AVCaptureVideoOrientation
-        
-        switch UIDevice.current.orientation {
-        case .portrait:
-            orientation = AVCaptureVideoOrientation.portrait
-        case .landscapeRight:
-            orientation = AVCaptureVideoOrientation.landscapeLeft
-        case .portraitUpsideDown:
-            orientation = AVCaptureVideoOrientation.portraitUpsideDown
-        default:
-            orientation = AVCaptureVideoOrientation.landscapeRight
-        }
-        
-        return orientation
-    }
+//    func currentVideoOrientation() -> AVCaptureVideoOrientation {
+//        var orientation: AVCaptureVideoOrientation
+//
+//        switch UIDevice.current.orientation {
+//        case .portrait:
+//            orientation = AVCaptureVideoOrientation.portrait
+//        case .landscapeRight:
+//            orientation = AVCaptureVideoOrientation.landscapeLeft
+//        case .portraitUpsideDown:
+//            orientation = AVCaptureVideoOrientation.portraitUpsideDown
+//        default:
+//            orientation = AVCaptureVideoOrientation.landscapeRight
+//        }
+//
+//        return orientation
+//    }
     
     @objc func startCapture() {
         // When gesture recognizer is pressed, if not recording, first time pressing states the final degree is set, second time pressing causes 5s time delay then start recording
@@ -264,9 +264,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             
             let connection = movieOutput.connection(with: AVMediaType.video)
             
-            if (connection?.isVideoOrientationSupported)! {
-                connection?.videoOrientation = currentVideoOrientation()
-            }
+//            if (connection?.isVideoOrientationSupported)! {
+//                connection?.videoOrientation = currentVideoOrientation()
+//            }
             
             if (connection?.isVideoStabilizationSupported)! {
                 connection?.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.auto
