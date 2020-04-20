@@ -44,10 +44,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set camPreview frame width and height
-        camPreview.frame.size.width = Screen.screenWidth - 2*8
-        camPreview.frame.size.height = Screen.screenHeight - 5*8 - cameraButton.frame.size.height
-        
         // Camera
         if setupSession() {
             setupPreview()
@@ -104,9 +100,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func setupPreview() {
         // Configure previewLayer
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.frame = camPreview.frame
-        // print("Preview Layer Frame: \(previewLayer.frame)")
-        previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        previewLayer.frame = camPreview.bounds
+        previewLayer.videoGravity = AVLayerVideoGravity.resizeAspect
         camPreview.layer.addSublayer(previewLayer)
     }
     
@@ -186,23 +181,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         return DispatchQueue.main
     }
     
-//    func currentVideoOrientation() -> AVCaptureVideoOrientation {
-//        var orientation: AVCaptureVideoOrientation
-//
-//        switch UIDevice.current.orientation {
-//        case .portrait:
-//            orientation = AVCaptureVideoOrientation.portrait
-//        case .landscapeRight:
-//            orientation = AVCaptureVideoOrientation.landscapeLeft
-//        case .portraitUpsideDown:
-//            orientation = AVCaptureVideoOrientation.portraitUpsideDown
-//        default:
-//            orientation = AVCaptureVideoOrientation.landscapeRight
-//        }
-//
-//        return orientation
-//    }
-    
     @objc func startCapture() {
         // When gesture recognizer is pressed, if not recording, first time pressing states the final degree is set, second time pressing causes 5s time delay then start recording
         if movieOutput.isRecording == false {
@@ -216,7 +194,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 recordingLabel.backgroundColor = .orange
                 camPreview.alpha = 0.8
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // 5s time delay
                     self.startRecording()
                 }
             }
@@ -256,17 +234,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         camPreview.alpha = 1
         allowClick = true
         
-        // self.cameraButton.isUserInteractionEnabled = true
-        
         timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(stopRecording), userInfo: nil, repeats: false)
         
         if movieOutput.isRecording == false {
             
             let connection = movieOutput.connection(with: AVMediaType.video)
-            
-//            if (connection?.isVideoOrientationSupported)! {
-//                connection?.videoOrientation = currentVideoOrientation()
-//            }
             
             if (connection?.isVideoStabilizationSupported)! {
                 connection?.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.auto

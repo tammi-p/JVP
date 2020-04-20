@@ -26,7 +26,6 @@ class VideoPlaybackViewController: UIViewController, MFMailComposeViewController
         
         avPlayerLayer = AVPlayerLayer(player: avPlayer)
         avPlayerLayer.frame = videoView.frame
-        // print("Player View Frame: \(avPlayerLayer.frame)")
         
         avPlayerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
         

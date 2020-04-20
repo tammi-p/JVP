@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hir-2G-Tfv">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,18 +12,18 @@
             <objects>
                 <viewController id="hir-2G-Tfv" customClass="CameraViewController" customModule="JVP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KFj-GY-vCH">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="BaW-Fg-GAY" userLabel="Stack View 0">
-                                <rect key="frame" x="8" y="52" width="398" height="802"/>
+                                <rect key="frame" x="8" y="8" width="359" height="651"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="icl-gI-cet" userLabel="Cam Preview">
-                                        <rect key="frame" x="0.0" y="0.0" width="398" height="714"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="359" height="563"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fqf-0j-bwn" userLabel="Stack View 1">
-                                        <rect key="frame" x="0.0" y="722" width="398" height="80"/>
+                                        <rect key="frame" x="0.0" y="571" width="359" height="80"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9iw-GU-tPa">
                                                 <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
@@ -34,7 +34,7 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubr-Lc-xT5">
-                                                <rect key="frame" x="90" y="15" width="308" height="50"/>
+                                                <rect key="frame" x="90" y="15" width="269" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="Xq7-5n-oxw"/>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="lfy-FO-Nkj"/>
@@ -53,7 +53,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recording" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vxc-6m-qCW">
-                                <rect key="frame" x="249" y="59" width="150" height="40"/>
+                                <rect key="frame" x="210" y="15" width="150" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Yqf-cm-hKS"/>
                                     <constraint firstAttribute="width" constant="150" id="w98-1l-Ooy"/>
@@ -89,11 +89,11 @@
             <objects>
                 <viewController id="gPG-DZ-UEt" customClass="VideoPlaybackViewController" customModule="JVP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FKo-yn-7kb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JkT-xc-rRS">
-                                <rect key="frame" x="323" y="733" width="61" height="45"/>
+                                <rect key="frame" x="284" y="572" width="61" height="45"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <state key="normal" title="Send"/>
                                 <connections>
@@ -101,7 +101,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mU0-UW-c7x">
-                                <rect key="frame" x="8" y="8" width="398" height="710"/>
+                                <rect key="frame" x="8" y="8" width="359" height="549"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
                         </subviews>
@@ -113,7 +113,6 @@
                             <constraint firstItem="mU0-UW-c7x" firstAttribute="top" secondItem="DXt-rU-JlC" secondAttribute="top" constant="8" id="TDK-DC-mYk"/>
                             <constraint firstItem="DXt-rU-JlC" firstAttribute="trailing" secondItem="mU0-UW-c7x" secondAttribute="trailing" constant="8" id="TDN-z3-yL9"/>
                             <constraint firstItem="mU0-UW-c7x" firstAttribute="leading" secondItem="DXt-rU-JlC" secondAttribute="leading" constant="8" id="kBe-wk-nlY"/>
-                            <constraint firstItem="mU0-UW-c7x" firstAttribute="centerX" secondItem="FKo-yn-7kb" secondAttribute="centerX" id="kgS-T8-N9b"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DXt-rU-JlC"/>
                     </view>
