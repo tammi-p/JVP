@@ -1,0 +1,77 @@
+<deployment-project plugin="plugin.apptool" plugin-version="1.0">
+  <configuration build-checksum="317214981" file="/Users/Abe/MIND/Rice/ELEC_494/VenousAmplify.prj" location="/Users/Abe/MIND/Rice/ELEC_494" name="VenousAmplify" target="target.mlapps" target-name="Package App">
+    <param.appname>VenousAmplify</param.appname>
+    <param.authnamewatermark>Venous</param.authnamewatermark>
+    <param.email />
+    <param.company />
+    <param.icon />
+    <param.icons />
+    <param.summary />
+    <param.description />
+    <param.screenshot>/private/var/folders/k8/5qqv8rc52mj7_j6x6thxqrkc0000gn/T/tp32a15629_88b4_4e85_93f3_6f9ce6107f14.png</param.screenshot>
+    <param.version>1.0</param.version>
+    <param.products.name />
+    <param.products.id />
+    <param.products.version />
+    <param.platforms />
+    <param.output>${PROJECT_ROOT}</param.output>
+    <param.guid>b355ec03-d85d-4302-a029-5871aaf2427c</param.guid>
+    <unset>
+      <param.email />
+      <param.company />
+      <param.icon />
+      <param.icons />
+      <param.summary />
+      <param.description />
+      <param.version />
+      <param.products.name />
+      <param.products.id />
+      <param.products.version />
+      <param.platforms />
+      <param.output />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}/VenousAmplify.mlapp</file>
+    </fileset.main>
+    <fileset.depfun>
+      <file>${PROJECT_ROOT}/EVM_Matlab/amplify_spatial_lpyr_temporal_iir.m</file>
+      <file>${PROJECT_ROOT}/EVM_Matlab/matlabPyrTools/binomialFilter.m</file>
+      <file>${PROJECT_ROOT}/EVM_Matlab/matlabPyrTools/buildLpyr.m</file>
+      <file>${PROJECT_ROOT}/EVM_Matlab/matlabPyrTools/corrDn.m</file>
+      <file>${PROJECT_ROOT}/EVM_Matlab/matlabPyrTools/lpyrHt.m</file>
+      <file>${PROJECT_ROOT}/EVM_Matlab/matlabPyrTools/maxPyrHt.m</file>
+      <file>${PROJECT_ROOT}/EVM_Matlab/matlabPyrTools/namedFilter.m</file>
+      <file>${PROJECT_ROOT}/EVM_Matlab/matlabPyrTools/pyrBand.m</file>
+      <file>${PROJECT_ROOT}/EVM_Matlab/matlabPyrTools/pyrBandIndices.m</file>
+      <file>${PROJECT_ROOT}/EVM_Matlab/matlabPyrTools/rconv2.m</file>
+      <file>${PROJECT_ROOT}/EVM_Matlab/matlabPyrTools/reconLpyr.m</file>
+      <file>${PROJECT_ROOT}/EVM_Matlab/matlabPyrTools/upConv.m</file>
+      <file>${PROJECT_ROOT}/EVM_Matlab/progmeter.m</file>
+    </fileset.depfun>
+    <fileset.resources />
+    <fileset.package />
+    <build-deliverables>
+      <file location="/Users/Abe/MIND/Rice" name="ELEC_494" optional="false">/Users/Abe/MIND/Rice/ELEC_494</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>/Applications/MATLAB_R2019b.app</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>true</unix>
+      <mac>true</mac>
+      <windows>false</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.15.3</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>maci64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
